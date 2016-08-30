@@ -46,7 +46,7 @@ pub fn set_file_times<P: AsRef<Path>>(path: P, accessed: u64, modified: u64) -> 
         let mtime = timeval { tv_sec: mtime as time_t, tv_usec: 0, };
         let times = [atime, mtime];
 
-        let ret = unsafe { utimes(path.as_ptr(), times.as_ptr()) };
+        let ret = unsafe { utimes(path.as_ptr() as *const _, times.as_ptr()) };
         if ret == 0 {
             Ok(())
         } else {
